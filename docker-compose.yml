@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+    php_80:
+        build:
+            context: .
+            dockerfile: ./php8.0.Dockerfile
+        volumes:
+            - ./:/testdata
+        links:
+            - mssql
+
+    php_81:
+        build:
+            context: .
+            dockerfile: ./php8.1.Dockerfile
+        volumes:
+            - ./:/testdata
+        links:
+            - mssql
+
+    mssql:
+        image: mcr.microsoft.com/mssql/server:2019-latest
+        ports:
+            - "1433:1433"
+        volumes:
+            - ./:/testdata
+        environment:
+            ACCEPT_EULA: Y
+            SA_PASSWORD: "Passw0rd!"
